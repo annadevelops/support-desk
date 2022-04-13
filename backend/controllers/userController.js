@@ -1,6 +1,7 @@
 const User = require('../models/userModel')
 const bcrypt = require('bcryptjs') //to hash password before storing to DB
 const saltRounds = bcrypt.genSaltSync(10) //salt rounds for bcrypt hash
+const jwt = require('jsonwebtoken')
 
 const asyncHandler = require('express-async-handler') //Easier syntax to call async await functions because Moongose will return promises see more - https://github.com/Abazhenov/express-async-handler
 
@@ -36,7 +37,8 @@ const registerUser = asyncHandler(async (req, res) => {
         res.status(201)
         res.json({
             _id: newUser._id,
-            user: newUser
+            user: newUser,
+            token: generateToken(newUser._id)
         })
     }
 })
@@ -53,12 +55,23 @@ const loginUser = asyncHandler(async (req, res) => {
     //check if email exits and hashPassword stored matches the password sending in the body
     if(user && (bcrypt.compareSync(password, user.password))) {
         res.status(200)
-        res.send(`${user.email} is an existing user`)
+        res.json({
+            _id: user._id,
+            user: user,
+            token: generateToken(user._id)
+        })
     } else {
         res.status(401)
         throw new Error('Invalid credentials')
     }
 })
+
+//Generate a JWT token
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn: '30d'
+    })
+}
 
 module.exports = {
     registerUser,
