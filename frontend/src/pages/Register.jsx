@@ -28,7 +28,7 @@ function Register() {
             dispatch(reset())
             navigate('/')
          }
-    }, [isError, isLoading, message, isSuccess, user])
+    }, [isError, isLoading, message, isSuccess, user, dispatch, navigate])
 
     const onChange = (e) => {
         setFormData((prevState) => ({
