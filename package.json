@@ -12,6 +12,7 @@
   "author": "Anna Nguyen",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "concurrently": "^7.1.0",
@@ -20,6 +21,7 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.10",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "react-redux": "^7.2.8"
   }
 }
