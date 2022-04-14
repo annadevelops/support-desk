@@ -3,6 +3,7 @@ import authService from './authService'
 
 //Get user from localstorage
 const user = JSON.parse(localStorage.getItem('user'))
+
 const initialState = {
     user: user,
     isError: false,
@@ -24,6 +25,11 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
 // Login user
 export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     console.log(user)
+})
+
+// Logout user
+export const logout = createAsyncThunk('auth/logout', async () => {
+    await authService.logout()
 })
 
 export const authSlice = createSlice({
@@ -52,6 +58,10 @@ export const authSlice = createSlice({
             state.isLoading = false
             state.isError = false
             state.user = action.payload
+        })
+        .addCase(logout.fulfilled, (state) => {
+            state.user = null
+            state.message = ''
         })
     }
 })
