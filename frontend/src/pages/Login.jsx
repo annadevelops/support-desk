@@ -22,9 +22,10 @@ function Login() {
             toast.error(message)
         }
         if(user) {
-            dispatch(reset())
             navigate('/')
         }
+
+        dispatch(reset())
     }, [user, isError, message, isLoading, isSuccess, dispatch, navigate])
 
     const onChange = (e) => {
