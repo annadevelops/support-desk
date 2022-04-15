@@ -10,8 +10,10 @@ const ticketSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide in details the issue']
     },
-    userId: {
-        type: String
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     },
 }, { timestamps: true })
 
