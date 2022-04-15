@@ -15,6 +15,12 @@ const ticketSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
+    status: {
+        type: String,
+        required: true,
+        enum: ['new', 'open', 'closed'],
+        default: 'new'
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Ticket', ticketSchema);

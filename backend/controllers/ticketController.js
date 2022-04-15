@@ -48,7 +48,8 @@ const createTicket = asyncHandler(async (req, res) => {
    Ticket.create({
        subject,
        body,
-       user: user._id
+       user: user._id,
+       status: 'new'
    })
 
     res.status(200).json(req.body)
