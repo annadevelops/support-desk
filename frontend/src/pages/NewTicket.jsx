@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { createTicket } from "../features/tickets/ticketsSlice"
 import BackButton from "../components/BackButton"
+import { useNavigate } from "react-router-dom"
 
 function NewTicket() {
     const [ticketData, setTicketData] = useState({
@@ -12,6 +13,7 @@ function NewTicket() {
     const { subject, body } = ticketData
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -20,6 +22,7 @@ function NewTicket() {
             body
         }
         dispatch(createTicket(newTicket))
+        navigate('/tickets')
     }
 
     const onChange = (e) => {
@@ -39,11 +42,11 @@ function NewTicket() {
             <form onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="subject">Subject</label>
-                    <input type="text"  name="subject" id="subject" value={subject} onChange={onChange}/>
+                    <input required type="text"  name="subject" id="subject" value={subject} onChange={onChange}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="body">Description of the issue</label>
-                    <textarea className='form-control' name="body" id="body" cols="30" rows="10" value={body} onChange={onChange}></textarea>
+                    <textarea required className='form-control' name="body" id="body" cols="30" rows="10" value={body} onChange={onChange}></textarea>
                 </div>
                 <div className="form-group">
                     <button className="btn btn-block">
