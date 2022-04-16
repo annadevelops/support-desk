@@ -29,6 +29,16 @@ export const fetchTickets = createAsyncThunk('tickets/fetchTickets', async (_, t
     }
 })
 
+export const fetchTicket = createAsyncThunk('tickets/fetchTicket', async (ticketId, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await ticketsService.fetchTicket(ticketId, token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 const ticketsSlice = createSlice({
     name: 'tickets',
     initialState,
@@ -48,6 +58,14 @@ const ticketsSlice = createSlice({
             state.tickets = action.payload
         })
         .addCase(fetchTickets.rejected, (state, action) => {
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(fetchTicket.fulfilled, (state, action) => {
+            state.isSuccess = true
+            state.ticket = action.payload
+        })
+        .addCase(fetchTicket.rejected, (state, action) => {
             state.isError = true
             state.message = action.payload
         })
